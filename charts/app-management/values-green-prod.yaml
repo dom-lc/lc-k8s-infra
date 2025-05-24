@@ -1,0 +1,28 @@
+coreAppset:
+  enabled: true
+  name: core-applicationset
+  generators:
+    # This is the list of generators for the ApplicationSet
+    - git:
+        # The URL of the Git repository containing the application manifests
+        repoURL: https://github.com/dom-lc/lc-k8s-apps.git
+        # The branch or commit SHA to use for the repository
+        revision: main
+        # This is a list of paths to the directories in the Git repository
+        directories:
+          - 'charts/*'
+  # This is the list of Helm value files to use for the application
+  # Note that these files are relative to the root of the Git repository
+  # and should be present in the directories specified above
+  helm:
+    valuesFiles:
+      - values-green-prod.yaml
+  # Sync options for the application
+  # Note that these options are used for the sync policy of the application
+  syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+
+
+newApplication:
+  enabled: false

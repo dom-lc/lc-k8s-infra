@@ -1,0 +1,1 @@
+helm template ../charts/app-management -f ../charts/app-management/values-surveillance-green.yaml | kubectl apply -f -

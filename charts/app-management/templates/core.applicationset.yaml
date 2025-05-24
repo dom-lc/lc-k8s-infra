@@ -1,0 +1,48 @@
+{{- if .Values.coreAppset.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ .Values.coreAppset.name }}
+  namespace: argocd
+spec:
+  generators:
+  {{- range .Values.coreAppset.generators }}
+    - git:
+        repoURL: {{ .git.repoURL }}
+        revision: {{ .git.revision }}
+        directories:
+        {{- $excludes := .git.excludeDirectories | default list }}
+          {{- range .git.directories }}
+          - path: {{ . }}
+            {{- if has . $excludes }}
+            exclude: true
+            {{- end }}
+        {{- end }}
+  {{- end }}
+  template:
+    metadata:
+      name: '{{`{{path.basename}}`}}'
+      namespace: '{{`{{path.basename}}`}}'
+    spec:
+      project: default
+      source:
+        repoURL: {{ (index .Values.coreAppset.generators 0).git.repoURL }}
+        targetRevision: {{ (index .Values.coreAppset.generators 0).git.revision }}
+        path: 'charts/{{`{{path.basename}}`}}'
+        helm:
+          valueFiles:
+            {{- range .Values.coreAppset.helm.valuesFiles }}
+            - {{ . }}
+            {{- end }}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{`{{path.basename}}`}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        {{- range .Values.coreAppset.syncOptions }}
+          - {{ . }}
+        {{- end }}
+{{- end }}

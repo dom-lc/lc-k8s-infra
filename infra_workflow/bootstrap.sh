@@ -59,7 +59,7 @@ done
 # Please refer to the init.sh script for the list of cluster names
 # or use: kind get clusters
 # "surveillance-green" 
-CLUSTERS=("surveillance-green" "green-prod")
+CLUSTERS=("surveillance-green")
 ARGO_VERSION="6.10.2" # argocd lc version
 NAMESPACE="argocd"
 

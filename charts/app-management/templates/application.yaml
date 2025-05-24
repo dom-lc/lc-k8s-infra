@@ -1,0 +1,29 @@
+{{- if .Values.newApplication.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.newApplication.appName }}
+  namespace: argocd
+spec:
+  project: default
+  source:
+    - repoURL: https://github.com/dom-lc/lc-k8s-infra.git
+      targetRevision: HEAD
+      path: charts/app-management
+      helm:
+        valueFiles:
+          - $values/charts/new-app/application.yaml
+    - repoURL: https://github.com/dom-lc/lc-k8s-apps.git
+      targetRevision: {{ .Values.newApplication.branchName }}
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .Values.newApplication.appName }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+{{- end }}

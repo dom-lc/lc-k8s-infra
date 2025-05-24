@@ -1,0 +1,43 @@
+coreAppset:
+  enabled: false
+  name: argocd-applicationset
+  generators:
+    # This is the list of generators for the ApplicationSet
+    - git:
+        # The URL of the Git repository containing the application manifests
+        repoURL: https://github.com/your-org/your-repo.git
+        # The branch or commit SHA to use for the repository
+        revision: HEAD
+        # This is a list of paths to the directories in the Git repository
+        directories:
+          - path-to-directory-1
+          - path-to-directory-2
+        # This is a list of paths you want to exclude from the generator
+        # Note that this path also needs to be part of your generators.git.directories
+        excludeDirectories:
+          - path-to-exclude-1
+          - path-to-exclude-2
+  # This is the list of Helm value files to use for the application
+  # Note that these files are relative to the root of the Git repository
+  # and should be present in the directories specified above
+  helm:
+    valuesFiles:
+      - values.yaml
+  # Sync options for the application
+  # Note that these options are used for the sync policy of the application
+  syncOptions:
+    - CreateNamespace=true
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=true
+    - Validate=false
+    - Replace=true
+    - SkipDryRunOnMissingResource=true
+    - SkipDryRunOnNotFound=true
+    - PrunePropagationPolicy=Background
+    - PrunePropagationPolicy=Foreground
+    - ServerSideApply=true
+
+newApplication:
+  enabled: true
+  appName: your-app-name
+  branchName: your-branch-name

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: app-management
+type: application 
+description: A Helm chart to deploy applications and applicationsets to be managed by argocd
+version: 0.1.0
+appVersion: "1.0"
