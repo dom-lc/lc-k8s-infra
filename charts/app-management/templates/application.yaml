@@ -12,7 +12,7 @@ spec:
       path: charts/app-management
       helm:
         valueFiles:
-          - $values/charts/new-app/application.yaml
+          - $values/charts/{{ .Values.newApplication.appName }}/application.yaml
     - repoURL: https://github.com/dom-lc/lc-k8s-apps.git
       targetRevision: {{ .Values.newApplication.branchName }}
       ref: values
