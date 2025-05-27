@@ -6,7 +6,7 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
+  sources:
     - repoURL: https://github.com/dom-lc/lc-k8s-infra.git
       targetRevision: HEAD
       path: charts/app-management

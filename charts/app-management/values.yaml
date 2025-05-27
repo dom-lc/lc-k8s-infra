@@ -36,6 +36,18 @@ coreAppset:
     - PrunePropagationPolicy=Background
     - PrunePropagationPolicy=Foreground
     - ServerSideApply=true
+  ignoreDifferences:
+    # This is the list of fields to ignore for the application
+    # Note that these fields are used for the ignore differences policy of the application
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
+    - group: apps
+      kind: StatefulSet
+      jsonPointers:
+        - /spec/replicas
+        - /spec/template/spec/containers/0/image
 
 newApplication:
   enabled: true

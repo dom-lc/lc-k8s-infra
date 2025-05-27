@@ -45,4 +45,24 @@ spec:
         {{- range .Values.coreAppset.syncOptions }}
           - {{ . }}
         {{- end }}
+      ignoreDifferences:
+      {{- range .Values.coreAppset.ignoreDifferences }}
+        - group: {{ .group | quote }}
+          kind: {{ .kind | quote }}
+          {{- if .namespace }}
+          namespace: {{ .namespace | quote }}
+          {{- end }}
+          {{- if .jsonPointers }}
+          jsonPointers:
+          {{- range .jsonPointers }}
+            - {{ . | quote }}
+          {{- end }}
+          {{- end }}
+          {{- if .jqPathExpressions }}
+          jqPathExpressions:
+          {{- range .jqPathExpressions }}
+            - {{ . | quote }}
+          {{- end }}
+          {{- end }}
+      {{- end}}
 {{- end }}

@@ -14,10 +14,10 @@
 # you can add single node clusters as needed by adding to the array
 # Note: The cluster name must be unique
 # Please do not forget to reflect these values in the bootstrap.sh & destroy.sh scripts
-CLUSTERS=("surveillance-green" "green-prod")
-
+CLUSTERS=("surveillance-green")
+#  "green-prod"
 
 # Create the kind Single Node Clusters
 for CLUSTER in "${CLUSTERS[@]}"; do
-  kind create cluster --name "$CLUSTER"
+  kind create cluster --name "$CLUSTER" --config kind.yaml
 done
