@@ -8,7 +8,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/dom-lc/lc-k8s-apps.git
-    targetRevision: HEAD
+    targetRevision: {{ .Values.newApplication.branchName }}
     path: charts/{{ .Values.newApplication.appName }}
     helm:
       valueFiles:
