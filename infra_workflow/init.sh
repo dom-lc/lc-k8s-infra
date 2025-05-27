@@ -21,3 +21,5 @@ CLUSTERS=("surveillance-green")
 for CLUSTER in "${CLUSTERS[@]}"; do
   kind create cluster --name "$CLUSTER" --config kind.yaml
 done
+
+sudo chmod 666 /var/run/docker.sock
