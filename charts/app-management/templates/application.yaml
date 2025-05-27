@@ -6,13 +6,13 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  sources:
-    - repoURL: https://github.com/dom-lc/lc-k8s-apps.git
-      targetRevision: HEAD
-      path: charts/{{ .Values.newApplication.appName }}
-      helm:
-        valueFiles:
-          - surveillance-green.yaml
+  source:
+    repoURL: https://github.com/dom-lc/lc-k8s-apps.git
+    targetRevision: HEAD
+    path: charts/{{ .Values.newApplication.appName }}
+    helm:
+      valueFiles:
+        - surveillance-green.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ .Values.newApplication.appName }}
